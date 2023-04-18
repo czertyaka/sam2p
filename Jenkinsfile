@@ -29,10 +29,10 @@ pipeline {
                 docker {
                     image: "aflplusplus/aflplusplus"
                 }
-                steps {
-                    sh "CC=afl-cc CXX=afl-c++ ./configure --enable-deb"
-                    sh "make -j \$(nproc)"
-                }
+            }
+            steps {
+                sh "CC=afl-cc CXX=afl-c++ ./configure --enable-deb"
+                sh "make -j \$(nproc)"
             }
         }
     }
