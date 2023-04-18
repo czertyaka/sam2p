@@ -27,7 +27,7 @@ pipeline {
         stage("Fuzzing") {
             agent {
                 docker {
-                    image: "aflplusplus/aflplusplus"
+                    image "aflplusplus/aflplusplus"
                 }
             }
             steps {
