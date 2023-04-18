@@ -31,7 +31,7 @@ pipeline {
                 }
             }
             steps {
-                sh "CC=afl-cc CXX=afl-c++ ./configure --enable-deb"
+                sh "CC=afl-cc CXX=afl-c++ ./configure --enable-debug=yes"
                 sh "make -j \$(nproc)"
             }
         }
