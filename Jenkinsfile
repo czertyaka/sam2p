@@ -12,10 +12,14 @@ pipeline {
                     steps {
                         sh "make clean"
                         sh "./configure --enable-debug=no"
-                        sh '''
-                            make -j $(nproc) \
-                                CXXFLAGS="-Os -finline-functions -DHAVE_CONFIG2_H -fsigned-char -fno-rtti -fno-exceptions"
-                        '''
+                        sh " make -j $(nproc)"
+                    }
+                }
+                stage("Debug") {
+                    steps {
+                        sh "make clean"
+                        sh "./configure --enable-debug=yes"
+                        sh " make -j $(nproc)"
                     }
                 }
             }
