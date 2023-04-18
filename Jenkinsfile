@@ -14,7 +14,7 @@ pipeline {
                         sh "./configure --enable-debug=no"
                         sh '''
                             make -j $(nproc) \
-                                CXXFLAGS='-Os -finline-functions -DHAVE_CONFIG2_H -fsigned-char -fno-rtti -fno-exceptions'
+                                CXXFLAGS="-Os -finline-functions -DHAVE_CONFIG2_H -fsigned-char -fno-rtti -fno-exceptions"
                         '''
                     }
                 }
