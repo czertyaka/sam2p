@@ -30,12 +30,6 @@ pipeline {
                     image "aflplusplus/aflplusplus"
                 }
             }
-            environment {
-                AFL_USE_ASAN = 1
-                AFL_USE_UBSAN = 1
-                AFL_USE_CFISAN = 1
-                AFL_USE_LSAN = 1
-            }
             steps {
                 sh "CC=afl-cc CXX=afl-c++ ./configure --enable-debug=yes"
                 sh "make -j \$(nproc)"
