@@ -6,7 +6,7 @@ pipeline {
                 docker {
                     image "gcc:latest"
                 }
-                stage("Release") }
+                stage("Release") {
                     steps {
                         sh "make clean"
                         sh "./configure --enable-debug=no"
