@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage("Build") {
             agent {
-                docker {
-                    image "rikorose/gcc-cmake"
+                dockerfile {
+                    filename "ci/gcc.Dockerfile"
                 }
             }
             stages {
