@@ -84,7 +84,7 @@ target_compile_options(sam2p
     PRIVATE
         -DHAVE_CONFIG2_H
         -DUSE_CONFIG_STDC_H
-        -DSAM2P_VERSION=\"1\"
+        -DSAM2P_VERSION=\"${SAM2P_VERSION}\"
         -fsigned-char
         -fno-rtti
         -fno-exceptions
