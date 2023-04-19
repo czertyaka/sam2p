@@ -1,13 +1,23 @@
 cmake_minimum_required(VERSION 3.21)
 project(sam2p)
+enable_language(CXX)
 
 if("${CMAKE_BINARY_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
     message(FATAL_ERROR "Can not generate Makefile in project root directory")
 endif()
 
 set(CMAKE_C_COMPILER ${CMAKE_CXX_COMPILER})
-
-add_compile_options(${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS} -W -Wall -Wextra -ansi -pedantic)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Wextra -ansi -pedantic")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
+if ("${BUILD_TYPE}" STREQUAL release)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -Os -finline-functions")
+elseif ("${BUILD_TYPE}" STREQUAL debug)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0")
+endif()
 
 execute_process(
     COMMAND ${PROJECT_SOURCE_DIR}/mkdist.sh
