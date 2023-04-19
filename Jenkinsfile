@@ -39,7 +39,7 @@ pipeline {
                 }
             }
             steps {
-                sh "cmake -B build . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=afl-c++"
+                sh "cmake -B build . -DCMAKE_CXX_COMPILER=afl-c++"
                 sh "AFL_USE_ASAN=1 cmake --build build --target sam2p -j \$(nproc)"
             }
         }
