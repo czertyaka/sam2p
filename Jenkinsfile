@@ -20,6 +20,11 @@ pipeline {
                         sh "cmake --build build/Debug --target sam2p -j \$(nproc)"
                     }
                 }
+                stage("Tests") {
+                    steps {
+                        sh "ctest --test-dir build/"
+                    }
+                }
             }
         }
         stage("Fuzzing") {
