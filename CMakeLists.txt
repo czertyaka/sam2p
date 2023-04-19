@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 project(sam2p)
 enable_language(CXX)
+enable_testing()
 
 if("${CMAKE_BINARY_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
     message(FATAL_ERROR "Can not generate Makefile in project root directory")
@@ -92,3 +93,12 @@ target_compile_options(sam2p
 )
 add_dependencies(sam2p sizeofs bts2)
 target_include_directories(sam2p PRIVATE ${CMAKE_BINARY_DIR})
+
+add_test(NAME eps_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.eps)
+add_test(NAME pdf_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.pdf)
+add_test(NAME ps_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.ps)
+add_test(NAME png_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.png)
+add_test(NAME tiff_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.tiff)
+add_test(NAME xpm_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.xpm)
+add_test(NAME bmp_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.bmp)
+add_test(NAME jpg_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.jpg)
