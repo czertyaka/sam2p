@@ -24,7 +24,7 @@ pipeline {
                     steps {
                         dir("build/Debug") {
                             sh "ctest --output-on-failure"
-                            sh "mkdir coverage"
+                            sh "mkdir -p coverage"
                             sh "lcov -t 'sam2p' -c -d CMakeFiles/sam2p.dir/ -o coverage/sam2p.info"
                             sh "genhtml -o coverage/report coverage/sam2p.info"
                         }
