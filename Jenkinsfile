@@ -23,6 +23,11 @@ pipeline {
                 stage("Tests") {
                     steps {
                         sh "ctest --test-dir build/Debug --output-on-failure"
+                        dir("build/Debug") {
+                            sh "mkdir coverage"
+                            sh "lcov -t 'sam2p' -c -d CMakeFiles/sam2p.dir/ -o coverage/sam2p.info"
+                            sh "genhtml -o coverage/report coverage/sam2p.info"
+                        }
                     }
                 }
             }
