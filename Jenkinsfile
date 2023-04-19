@@ -22,7 +22,7 @@ pipeline {
                 }
                 stage("Tests") {
                     steps {
-                        sh "ctest --test-dir build/ --output-on-failure"
+                        sh "ctest --test-dir build/Debug --output-on-failure"
                     }
                 }
             }
