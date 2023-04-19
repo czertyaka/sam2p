@@ -36,7 +36,7 @@ pipeline {
                                     allowMissing: false,
                                     alwaysLinkToLastBuild: true,
                                     keepAll: false,
-                                    reportDir: "build/Debug/coverage/report
+                                    reportDir: "build/Debug/coverage/report",
                                     reportFiles: "index.html",
                                     reportName: "Tests Coverage Report"
                                 ]
