@@ -17,7 +17,8 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
 if ("${BUILD_TYPE}" STREQUAL release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -Os -finline-functions")
 elseif ("${BUILD_TYPE}" STREQUAL debug)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage -fprofile-abs-path")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage -fprofile-abs-path")
 endif()
 
 execute_process(
