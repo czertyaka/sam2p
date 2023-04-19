@@ -29,6 +29,20 @@ pipeline {
                             sh "genhtml -o coverage/report coverage/sam2p.info"
                         }
                     }
+                    post {
+                        success {
+                            publishHTML(
+                                target: [
+                                    allowMissing: false,
+                                    alwaysLinkToLastBuild: true,
+                                    keepAll: false,
+                                    reportDir: "build/Debug/coverage/report
+                                    reportFiles: "index.html",
+                                    reportName: "Tests Coverage Report"
+                                ]
+                            )
+                        }
+                    }
                 }
             }
         }
