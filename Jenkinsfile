@@ -4,22 +4,20 @@ pipeline {
         stage("Build") {
             agent {
                 docker {
-                    image "gcc:latest"
+                    image "rikorose/gcc-cmake"
                 }
             }
             stages {
                 stage("Release") {
                     steps {
-                        sh "make clean"
-                        sh "./configure --enable-debug=no"
-                        sh "make -j \$(nproc)"
+                        sh "cmake -B build/Release ."
+                        sh "cmake --build build/Release --target sam2p -j \$(nproc)"
                     }
                 }
                 stage("Debug") {
                     steps {
-                        sh "make clean"
-                        sh "./configure --enable-debug=yes"
-                        sh "make -j \$(nproc)"
+                        sh "cmake -B build/Debug . -DCMAKE_BUILD_TYPE=Debug"
+                        sh "cmake --build build/Debug --target sam2p -j \$(nproc)"
                     }
                 }
             }
@@ -31,8 +29,8 @@ pipeline {
                 }
             }
             steps {
-                sh "CC=afl-cc CXX=afl-c++ ./configure --enable-debug=yes"
-                sh "AFL_USE_ASAN=1 make -j \$(nproc)"
+                sh "cmake -B build . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=afl-c++"
+                sh "AFL_USE_ASAN=1 cmake --build build --target sam2p -j \$(nproc)"
             }
         }
     }
