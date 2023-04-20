@@ -52,13 +52,10 @@ pipeline {
                     filename "ci/afl.Dockerfile"
                 }
             }
-            environment {
-                AFL_USE_ASAN = 1
-            }
             steps {
                 sh "cmake -B build/Fuzzing . -DCMAKE_CXX_COMPILER=afl-g++"
                 dir("build/Fuzzing") {
-                    sh "cmake --build . --target sam2p -j \$(nproc)"
+                    sh "AFL_USE_ASAN=1 cmake --build . --target sam2p -j \$(nproc)"
                     sh "ctest"
                 }
             }
