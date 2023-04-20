@@ -48,8 +48,8 @@ pipeline {
         }
         stage("Fuzzing") {
             agent {
-                docker {
-                    image "aflplusplus/aflplusplus"
+                dockerfile {
+                    filename "ci/afl.Dockerfile"
                 }
             }
             environment {
