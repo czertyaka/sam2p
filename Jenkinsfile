@@ -65,7 +65,9 @@ pipeline {
                 sh """
                     cmake -B build/Fuzzing . \
                         -DCMAKE_CXX_COMPILER=afl-clang-lto++ \
-                        -DCMAKE_LINKER=afl-clang-lto
+                        -DCMAKE_LINKER=afl-clang-lto \
+                        -DCMAKE_AR=llvm-ar-14 \
+                        -DCMAKE_CXX_COMPILER_RANLIB=llvm-ranlib-14
                 """
                 dir("build/Fuzzing") {
                     sh "cmake --build . --target sam2p -j \$(nproc)"
