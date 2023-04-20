@@ -31,7 +31,7 @@ if (NOT ${SAM2P_VERSION_RETCODE} EQUAL 0)
     message(STATUS "SAM2P_VERSION_RETCODE=${SAM2P_VERSION_RETCODE}")
 endif()
 string(REGEX MATCH "[0-9]+\.[0-9]+\.[0-9]+" SAM2P_VERSION ${SAM2P_VERSION})
-message(STATUS "SAM2P_VERSION=${SAM2P_VERSION}")
+message(STATUS "Version: ${SAM2P_VERSION}")
 
 add_executable(print_sizeofs print_sizeofs.c)
 add_custom_target(
