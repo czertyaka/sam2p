@@ -61,7 +61,11 @@ pipeline {
                 AFL_USE_ASAN = 1
             }
             steps {
-                sh "cmake -B build/Fuzzing . -DCMAKE_CXX_COMPILER=afl-gcc-fast"
+                sh """
+                    cmake -B build/Fuzzing . \
+                        -DCMAKE_CXX_COMPILER=afl-clang-lto++ \
+                        -DCMAKE_LINKER=afl-clang-lto
+                """
                 dir("build/Fuzzing") {
                     sh "cmake --build . --target sam2p -j \$(nproc)"
                     sh "ctest"
