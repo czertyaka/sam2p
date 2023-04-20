@@ -59,6 +59,7 @@ pipeline {
             }
             environment {
                 AFL_USE_ASAN = 1
+                AFL_LLVM_LAF_ALL = 1
             }
             steps {
                 sh """
