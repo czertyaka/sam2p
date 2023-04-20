@@ -64,11 +64,10 @@ pipeline {
                 sh """
                     cmake -B build/Fuzzing . \
                         -DCMAKE_CXX_COMPILER=afl-clang-lto++ \
-                        -DCMAKE_LINKER=afl-clang-lto \
-                        2>&1
+                        -DCMAKE_LINKER=afl-clang-lto
                 """
                 dir("build/Fuzzing") {
-                    sh "cmake --build . --target sam2p -j \$(nproc)"
+                    sh "cmake --build . --target sam2p -j \$(nproc) 2>&1"
                     sh "ctest"
                 }
             }
