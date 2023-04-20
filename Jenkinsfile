@@ -45,6 +45,11 @@ pipeline {
                     }
                 }
             }
+            post {
+                always {
+                    cleanWs(deleteDirs: true)
+                }
+            }
         }
         stage("Fuzzing") {
             agent {
@@ -59,11 +64,11 @@ pipeline {
                     sh "ctest"
                 }
             }
-        }
-    }
-    post {
-        always {
-            cleanWs(deleteDirs: true)
+            post {
+                always {
+                    cleanWs(deleteDirs: true)
+                }
+            }
         }
     }
 }
