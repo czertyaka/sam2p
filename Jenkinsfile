@@ -59,10 +59,10 @@ pipeline {
                     sh "ctest"
                 }
             }
-        }
-        post {
-            always {
-                cleanWs(deleteDirs: true)
+            post {
+                always {
+                    cleanWs(deleteDirs: true)
+                }
             }
         }
     }
