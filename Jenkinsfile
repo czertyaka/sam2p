@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh "cmake -B build/Fuzzing . -DCMAKE_CXX_COMPILER=afl-g++"
                 dir("build/Fuzzing") {
-                    sh "AFL_USE_ASAN=1 cmake --build . --target sam2p -j \$(nproc)"
+                    sh "cmake --build . --target sam2p -j \$(nproc)"
                     sh "ctest"
                 }
             }
