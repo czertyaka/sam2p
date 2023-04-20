@@ -17,8 +17,8 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
 if ("${BUILD_TYPE}" STREQUAL release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -Os -finline-functions")
 elseif ("${BUILD_TYPE}" STREQUAL debug)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage -fprofile-abs-path")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage -fprofile-abs-path")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 endif()
 
 execute_process(
@@ -95,11 +95,23 @@ target_compile_options(sam2p
 add_dependencies(sam2p sizeofs bts2)
 target_include_directories(sam2p PRIVATE ${CMAKE_BINARY_DIR})
 
-add_test(NAME eps_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.eps)
-add_test(NAME pdf_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.pdf)
-add_test(NAME ps_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.ps)
-add_test(NAME png_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.png)
-add_test(NAME tiff_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.tiff)
-add_test(NAME xpm_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.xpm)
-add_test(NAME bmp_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.bmp)
-add_test(NAME jpg_test COMMAND ${CMAKE_BINARY_DIR}/sam2p ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.jpg)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test_dir)
+function(sam2p_add_test)
+    set(TEST ${ARGV0})
+    set(INPUT_FILE ${ARGV1})
+    set(OUTPUT_FILE ${ARGV2})
+    add_test(
+        NAME ${TEST}
+        COMMAND ${CMAKE_BINARY_DIR}/sam2p ${INPUT_FILE} ${OUTPUT_FILE}
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test_dir
+    )
+endfunction()
+
+sam2p_add_test(eps_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.eps)
+sam2p_add_test(pdf_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.pdf)
+sam2p_add_test(ps_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.ps)
+sam2p_add_test(png_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.png)
+sam2p_add_test(tiff_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.tiff)
+sam2p_add_test(xpm_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.xpm)
+sam2p_add_test(bmp_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.bmp)
+sam2p_add_test(jpg_test ${PROJECT_SOURCE_DIR}/examples/pts2.pbm try.jpg)
