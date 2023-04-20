@@ -67,7 +67,7 @@ pipeline {
                         -DCMAKE_LINKER=afl-clang-lto
                 """
                 dir("build/Fuzzing") {
-                    sh "cmake --build . --target sam2p -j \$(nproc) 2>&1"
+                    sh "cmake --build . --target sam2p -j \$(nproc)"
                     sh "ctest"
                 }
             }
