@@ -52,9 +52,15 @@ pipeline {
                     image "aflplusplus/aflplusplus"
                 }
             }
+            environment {
+                AFL_USE_ASAN = 1
+                AFL_USE_UBSAN = 1
+                AFL_USE_CFISAN = 1
+                AFL_USE_LSAN = 1
+            }
             steps {
-                sh "cmake -B build/Fuzzing . -DCMAKE_CXX_COMPILER=afl-c++"
-                sh "AFL_USE_ASAN=1 cmake --build build/Fuzzing --target sam2p -j \$(nproc)"
+                sh "cmake -B build/Fuzzing . -DCMAKE_CXX_COMPILER=afl-g++"
+                sh "cmake --build build/Fuzzing --target sam2p -j \$(nproc)"
             }
         }
     }
