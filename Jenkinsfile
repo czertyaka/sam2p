@@ -115,6 +115,20 @@ pipeline {
                                 -e './build/FuzzingCoverage/sam2p AFL_FILE build/Fuzzing/out.pdf'
                         """
                     }
+                    post {
+                        success {
+                            publishHTML(
+                                target: [
+                                    allowMissing: false,
+                                    alwaysLinkToLastBuild: true,
+                                    keepAll: false,
+                                    reportDir: "build/Fuzzing/output/cov/web/",
+                                    reportFiles: "index.html",
+                                    reportName: "Fuzzing Coverage Report"
+                                ]
+                            )
+                        }
+                    }
                 }
             }
         }
