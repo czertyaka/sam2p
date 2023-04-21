@@ -535,44 +535,44 @@ static bool one_liner(SimBuffer::B &jobss, char const *const* a) {
       }
     } else { /* a selector or a normal argument */
       if (!(no_selector && no_option_term)) goto normal_label;
-      pend=p; while (*pend!='\0' && *pend!=':') pend++;
+      pend=p; while (*pend!='\0' && *pend!='$') pend++;
       if (pend-p>=2 && *pend==':') { /* an ImageMagick-style FileFormat selector */
-             if (GenBuffer::nocase_strbegins(p, "PSL2:")
-              || GenBuffer::nocase_strbegins(p, "EPS2:")) FileFormat=Rule::Cache::FF_PSL2;
-        else if (GenBuffer::nocase_strbegins(p, "EPS:"))  FileFormat=Rule::Cache::FF_eps;
-        else if (GenBuffer::nocase_strbegins(p, "PS2:"))  { FileFormat=Rule::Cache::FF_PSL2; if (Scale==Rule::CacheHints::SC_default) Scale=Rule::CacheHints::SC_RotateOK; }
-        else if (GenBuffer::nocase_strbegins(p, "PS:"))   { FileFormat=Rule::Cache::FF_eps;  if (Scale==Rule::CacheHints::SC_default) Scale=Rule::CacheHints::SC_RotateOK; }
-        else if (GenBuffer::nocase_strbegins(p, "PSL1:")) FileFormat=Rule::Cache::FF_PSL1;
-        else if (GenBuffer::nocase_strbegins(p, "PSLC:")) FileFormat=Rule::Cache::FF_PSLC;
-        else if (GenBuffer::nocase_strbegins(p, "PSL3:")) FileFormat=Rule::Cache::FF_PSL3;
-        else if (GenBuffer::nocase_strbegins(p, "PDF:")
-              || GenBuffer::nocase_strbegins(p, "PDF:"))  FileFormat=Rule::Cache::FF_pdfb;
-        else if (GenBuffer::nocase_strbegins(p, "PDFX:")) FileFormat=Rule::Cache::FF_pdf;
-        else if (GenBuffer::nocase_strbegins(p, "PDFB1.0:")) FileFormat=Rule::Cache::FF_PDFB10;
-        else if (GenBuffer::nocase_strbegins(p, "PDFB1.2:")) FileFormat=Rule::Cache::FF_PDFB12;
-        else if (GenBuffer::nocase_strbegins(p, "PDF1.0:"))  FileFormat=Rule::Cache::FF_PDF10;
-        else if (GenBuffer::nocase_strbegins(p, "PDF1.2:"))  FileFormat=Rule::Cache::FF_PDF12;
-        else if (GenBuffer::nocase_strbegins(p, "GIF89a:")
-              || GenBuffer::nocase_strbegins(p, "GIF:"))  FileFormat=Rule::Cache::FF_GIF89a;
+             if (GenBuffer::nocase_strbegins(p, "PSL2$")
+              || GenBuffer::nocase_strbegins(p, "EPS2$")) FileFormat=Rule::Cache::FF_PSL2;
+        else if (GenBuffer::nocase_strbegins(p, "EPS$"))  FileFormat=Rule::Cache::FF_eps;
+        else if (GenBuffer::nocase_strbegins(p, "PS2$"))  { FileFormat=Rule::Cache::FF_PSL2; if (Scale==Rule::CacheHints::SC_default) Scale=Rule::CacheHints::SC_RotateOK; }
+        else if (GenBuffer::nocase_strbegins(p, "PS$"))   { FileFormat=Rule::Cache::FF_eps;  if (Scale==Rule::CacheHints::SC_default) Scale=Rule::CacheHints::SC_RotateOK; }
+        else if (GenBuffer::nocase_strbegins(p, "PSL1$")) FileFormat=Rule::Cache::FF_PSL1;
+        else if (GenBuffer::nocase_strbegins(p, "PSLC$")) FileFormat=Rule::Cache::FF_PSLC;
+        else if (GenBuffer::nocase_strbegins(p, "PSL3$")) FileFormat=Rule::Cache::FF_PSL3;
+        else if (GenBuffer::nocase_strbegins(p, "PDF$")
+              || GenBuffer::nocase_strbegins(p, "PDF$"))  FileFormat=Rule::Cache::FF_pdfb;
+        else if (GenBuffer::nocase_strbegins(p, "PDFX$")) FileFormat=Rule::Cache::FF_pdf;
+        else if (GenBuffer::nocase_strbegins(p, "PDFB1.0$")) FileFormat=Rule::Cache::FF_PDFB10;
+        else if (GenBuffer::nocase_strbegins(p, "PDFB1.2$")) FileFormat=Rule::Cache::FF_PDFB12;
+        else if (GenBuffer::nocase_strbegins(p, "PDF1.0$"))  FileFormat=Rule::Cache::FF_PDF10;
+        else if (GenBuffer::nocase_strbegins(p, "PDF1.2$"))  FileFormat=Rule::Cache::FF_PDF12;
+        else if (GenBuffer::nocase_strbegins(p, "GIF89a$")
+              || GenBuffer::nocase_strbegins(p, "GIF$"))  FileFormat=Rule::Cache::FF_GIF89a;
         /* vvv do_stop_SampleFormat BUGFIX at Thu Nov 21 23:44:20 CET 2002 */
-        else if (GenBuffer::nocase_strbegins(p, "PNM:"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Gray1); APPEND_sf(Image::SF_Gray8); APPEND_sf(Image::SF_Rgb8); APPEND_sf(Image::SF_Transparent8); do_stop_SampleFormat=true; }
-        else if (GenBuffer::nocase_strbegins(p, "PBM:"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Gray1); do_stop_SampleFormat=true; }
-        else if (GenBuffer::nocase_strbegins(p, "PGM:"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Gray8); do_stop_SampleFormat=true; }
-        else if (GenBuffer::nocase_strbegins(p, "PPM:"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Rgb8);  do_stop_SampleFormat=true; }
-        else if (GenBuffer::nocase_strbegins(p, "PAM:"))  FileFormat=Rule::Cache::FF_PAM;
-        else if (GenBuffer::nocase_strbegins(p, "PIP:"))  FileFormat=Rule::Cache::FF_PIP;
-        else if (GenBuffer::nocase_strbegins(p, "Empty:"))FileFormat=Rule::Cache::FF_Empty;
-        else if (GenBuffer::nocase_strbegins(p, "Meta:")) FileFormat=Rule::Cache::FF_Meta;
-        else if (GenBuffer::nocase_strbegins(p, "JPEG:")
-              || GenBuffer::nocase_strbegins(p, "JPG:"))  FileFormat=Rule::Cache::FF_JPEG;
-        else if (GenBuffer::nocase_strbegins(p, "TIFF:")
-              || GenBuffer::nocase_strbegins(p, "TIF:"))  FileFormat=Rule::Cache::FF_TIFF;
-        else if (GenBuffer::nocase_strbegins(p, "PNG:"))  FileFormat=Rule::Cache::FF_PNG;
-        else if (GenBuffer::nocase_strbegins(p, "XPM:"))  FileFormat=Rule::Cache::FF_XPM;
-        else if (GenBuffer::nocase_strbegins(p, "BMP:")
-              || GenBuffer::nocase_strbegins(p, "RLE:"))  { FileFormat=Rule::Cache::FF_BMP; /*APPEND_co(Rule::Cache::CO_RLE);*/ }
-        else if (GenBuffer::nocase_strbegins(p, "XWD:"))  FileFormat=Rule::Cache::FF_XWD;
-        else if (GenBuffer::nocase_strbegins(p, "X11:"))  FileFormat=Rule::Cache::FF_X11;
+        else if (GenBuffer::nocase_strbegins(p, "PNM$"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Gray1); APPEND_sf(Image::SF_Gray8); APPEND_sf(Image::SF_Rgb8); APPEND_sf(Image::SF_Transparent8); do_stop_SampleFormat=true; }
+        else if (GenBuffer::nocase_strbegins(p, "PBM$"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Gray1); do_stop_SampleFormat=true; }
+        else if (GenBuffer::nocase_strbegins(p, "PGM$"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Gray8); do_stop_SampleFormat=true; }
+        else if (GenBuffer::nocase_strbegins(p, "PPM$"))  { FileFormat=Rule::Cache::FF_PNM; APPEND_sf(Image::SF_Rgb8);  do_stop_SampleFormat=true; }
+        else if (GenBuffer::nocase_strbegins(p, "PAM$"))  FileFormat=Rule::Cache::FF_PAM;
+        else if (GenBuffer::nocase_strbegins(p, "PIP$"))  FileFormat=Rule::Cache::FF_PIP;
+        else if (GenBuffer::nocase_strbegins(p, "Empty$"))FileFormat=Rule::Cache::FF_Empty;
+        else if (GenBuffer::nocase_strbegins(p, "Meta$")) FileFormat=Rule::Cache::FF_Meta;
+        else if (GenBuffer::nocase_strbegins(p, "JPEG$")
+              || GenBuffer::nocase_strbegins(p, "JPG$"))  FileFormat=Rule::Cache::FF_JPEG;
+        else if (GenBuffer::nocase_strbegins(p, "TIFF$")
+              || GenBuffer::nocase_strbegins(p, "TIF$"))  FileFormat=Rule::Cache::FF_TIFF;
+        else if (GenBuffer::nocase_strbegins(p, "PNG$"))  FileFormat=Rule::Cache::FF_PNG;
+        else if (GenBuffer::nocase_strbegins(p, "XPM$"))  FileFormat=Rule::Cache::FF_XPM;
+        else if (GenBuffer::nocase_strbegins(p, "BMP$")
+              || GenBuffer::nocase_strbegins(p, "RLE$"))  { FileFormat=Rule::Cache::FF_BMP; /*APPEND_co(Rule::Cache::CO_RLE);*/ }
+        else if (GenBuffer::nocase_strbegins(p, "XWD$"))  FileFormat=Rule::Cache::FF_XWD;
+        else if (GenBuffer::nocase_strbegins(p, "X11$"))  FileFormat=Rule::Cache::FF_X11;
         else {
           Error::sev(Error::ERROR_CONT) << "one_liner: invalid FileFormat selector: " << (SimBuffer::B().appendDumpC(SimBuffer::Static(p, pend-p), true)) << (Error*)0;
           badp=true;
@@ -968,8 +968,8 @@ int run_sam2p_engine(Files::FILEW &sout, Files::FILEW &serr, char const*const*ar
     /* ^^^ Dat: the result of the second p.parse1() doesn't get delete0(...)d */
   } else if (helpp || argv1[0]==(char const*)NULLP) { help: /* help message */
     sout << "Usage:   " << Error::long_argv0 << " <filename.job>\n" <<
-            "         " << Error::long_argv0 << " [options] <in.img> [OutputFormat:] <out.img>\n" <<
-            "Example: " << Error::long_argv0 << " test.gif EPS: test.eps\n";
+            "         " << Error::long_argv0 << " [options] <in.img> [OutputFormat$] <out.img>\n" <<
+            "Example: " << Error::long_argv0 << " test.gif EPS$ test.eps\n";
     if (helpp) Error::cexit(Error::runCleanups(0));
     Error::sev(Error::EERROR) << "Incorrect command line" << (Error*)0;
   } else { /* one_liner */

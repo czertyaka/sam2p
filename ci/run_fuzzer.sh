@@ -14,4 +14,4 @@ else
 fi
 
 afl-fuzz -i ${arg}/corpus -o ${dir}/output -${role_flag} ${output_type} -V ${timeout} -- \
-    ./${dir}/sam2p '@@' ${dir}/out.${output_type}
+    ./${dir}/sam2p @@ ${dir}/out.${output_type}
