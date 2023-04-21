@@ -109,6 +109,7 @@ pipeline {
                         sh "cmake --build build/FuzzingCoverage --target sam2p -j \$(nproc)"
                         sh """
                             afl-cov \
+                                --overwrite \
                                 -d build/Fuzzing/output \
                                 -c build/FuzzingCoverage \
                                 -e './build/FuzzingCoverage/sam2p AFL_FILE build/Fuzzing/out.pdf'
