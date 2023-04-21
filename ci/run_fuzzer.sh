@@ -12,6 +12,6 @@ else
 fi
 
 timeout -s INT ${timeout} \
-    afl-fuzzer -i ${dir}/corpus -o ${dir}/output -${role_flag} ${output_type} -- \
+    afl-fuzz -i ${dir}/corpus -o ${dir}/output -${role_flag} ${output_type} -- \
     ./${dir}/sam2p -- ${dir}/out.${output_type}
 exit 0
