@@ -12,7 +12,7 @@ else
 fi
 
 if [ "$(ls -A ${dir}/output)" ]; then
-    input_arg="--"
+    input_arg="-"
 else
     input_arg="${dir}/corpus"
 fi
