@@ -69,9 +69,12 @@ pipeline {
                         -DCMAKE_AR=llvm-ar-14 \
                         -DCMAKE_CXX_COMPILER_RANLIB=llvm-ranlib-14
                 """
+                sh "cmake --build build/Fuzzing --target sam2p -j \$(nproc)"
+                sh "mkdir -p build/Fuzzing/corpus"
+                sh "cp examples/*.pbm build/Fuzzing/corpus"
+                sh "cp examples/*.bmp build/Fuzzing/corpus"
                 dir("build/Fuzzing") {
-                    sh "cmake --build . --target sam2p -j \$(nproc)"
-                    sh "ctest"
+                    sh "afl-fuzz -i corpus -o output -- sam2p @@ out.pdf"
                 }
             }
             post {
