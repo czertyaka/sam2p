@@ -13,12 +13,5 @@ else
     role_flag="S"
 fi
 
-if [ "$(ls -A ${dir}/output/${output_type}/_resume)" ]; then
-    # input_arg="-"
-    input_arg="${dir}/corpus"
-else
-    input_arg="${dir}/corpus"
-fi
-
-afl-fuzz -i ${input_arg} -o ${dir}/output -${role_flag} ${output_type} -V ${timeout} -- \
+afl-fuzz -i ${arg}/corpus -o ${dir}/output -${role_flag} ${output_type} -V ${timeout} -- \
     ./${dir}/sam2p @@ ${dir}/out.${output_type}
