@@ -103,6 +103,18 @@ pipeline {
                         }
                     }
                 }
+                stage("Coverage") {
+                    steps {
+                        sh "cmake -B build/FuzzingCoverage . -DCMAKE_BUILD_TYPE=Debug"
+                        sh "cmake --build build/FuzzingCoverage --target sam2p \$(nproc)"
+                        sh """
+                            afl-cov \
+                                -d build/Fuzzing/output \
+                                -c build/FuzzingCoverage \
+                                -e ./sam2p AFL_FILE build/Fuzzing/out.pdf
+                        """
+                    }
+                }
             }
         }
     }
