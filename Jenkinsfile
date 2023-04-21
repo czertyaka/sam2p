@@ -111,7 +111,7 @@ pipeline {
                             afl-cov \
                                 -d build/Fuzzing/output \
                                 -c build/FuzzingCoverage \
-                                -e ./sam2p AFL_FILE build/Fuzzing/out.pdf
+                                -e './sam2p AFL_FILE build/Fuzzing/out.pdf'
                         """
                     }
                 }
