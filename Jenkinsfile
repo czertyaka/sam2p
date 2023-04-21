@@ -74,7 +74,7 @@ pipeline {
                 sh "cp examples/*.pbm build/Fuzzing/corpus"
                 sh "cp examples/*.bmp build/Fuzzing/corpus"
                 dir("build/Fuzzing") {
-                    sh "afl-fuzz -i corpus -o output -- sam2p @@ out.pdf"
+                    sh "afl-fuzz -i corpus -o output -- ./sam2p @@ out.pdf"
                 }
             }
             post {
