@@ -2,8 +2,9 @@ pipeline {
     agent none
     parameters {
         string(
-            name: 'FUZZING_TIMEOUT',
-            defaultValue: '30m'
+            name: 'FTO',
+            defaultValue: '30m',
+            description: 'Fuzzing timeout'
         )
     }
     stages {
@@ -87,22 +88,22 @@ pipeline {
                     parallel {
                         stage("PDF") {
                             steps {
-                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FUZZING_TIMEOUT}' 'pdf' '1'"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FTO}' 'pdf' '1'"
                             }
                         }
                         stage("PNG") {
                             steps {
-                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FUZZING_TIMEOUT}' 'png' '0'"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FTO}' 'png' '0'"
                             }
                         }
                         stage("TIFF") {
                             steps {
-                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FUZZING_TIMEOUT}' 'tiff' '0'"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FTO}' 'tiff' '0'"
                             }
                         }
                         stage("EPS") {
                             steps {
-                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FUZZING_TIMEOUT}' 'eps' '0'"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '${params.FTO}' 'eps' '0'"
                             }
                         }
                     }
