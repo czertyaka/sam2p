@@ -113,8 +113,8 @@ pipeline {
                     cleanWs(
                         deleteDirs: true,
                         patterns: [
-                            [ pattern: "build/corpus/*", type: 'EXCLUDE' ],
-                            [ pattern: "build/output/*", type: 'EXCLUDE' ]
+                            [ pattern: "sam2p/build/corpus", type: 'EXCLUDE' ],
+                            [ pattern: "sam2p/build/output", type: 'EXCLUDE' ]
                         ]
                     )
                 }
