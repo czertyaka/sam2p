@@ -57,24 +57,49 @@ pipeline {
                     filename "ci/afl.Dockerfile"
                 }
             }
-            environment {
-                AFL_USE_ASAN = 1
-                AFL_LLVM_LAF_ALL = 1
-            }
-            steps {
-                sh """
-                    cmake -B build/Fuzzing . \
-                        -DCMAKE_CXX_COMPILER=afl-clang-lto++ \
-                        -DCMAKE_LINKER=afl-clang-lto \
-                        -DCMAKE_AR=llvm-ar-14 \
-                        -DCMAKE_CXX_COMPILER_RANLIB=llvm-ranlib-14
-                """
-                sh "cmake --build build/Fuzzing --target sam2p -j \$(nproc)"
-                sh "mkdir -p build/Fuzzing/corpus"
-                sh "cp examples/*.pbm build/Fuzzing/corpus"
-                sh "cp examples/*.bmp build/Fuzzing/corpus"
-                dir("build/Fuzzing") {
-                    sh "afl-fuzz -i corpus -o output -- ./sam2p @@ out.pdf"
+            stages {
+                stage("Prepare") {
+                    environment {
+                        AFL_USE_ASAN = 1
+                        AFL_LLVM_LAF_ALL = 1
+                    }
+                    steps {
+                        sh """
+                            cmake -B build/Fuzzing . \
+                                -DCMAKE_CXX_COMPILER=afl-clang-lto++ \
+                                -DCMAKE_LINKER=afl-clang-lto \
+                                -DCMAKE_AR=llvm-ar-14 \
+                                -DCMAKE_CXX_COMPILER_RANLIB=llvm-ranlib-14
+                        """
+                        sh "cmake --build build/Fuzzing --target sam2p -j \$(nproc)"
+                        sh "mkdir -p build/Fuzzing/corpus"
+                        sh "cp examples/*.pbm build/Fuzzing/corpus"
+                        sh "cp examples/*.bmp build/Fuzzing/corpus"
+                    }
+                }
+                stage("Run") {
+                    parallel {
+                        stage("PDF") {
+                            steps {
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M pdf -- ./build/sam2p @@ build/out.pdf"
+                            }
+                        }
+                        stage("PNG") {
+                            steps {
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M png -- ./build/sam2p @@ build/out.png"
+                            }
+                        }
+                        stage("TIFF") {
+                            steps {
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M tiff -- ./build/sam2p @@ build/out.tiff"
+                            }
+                        }
+                        stage("EPS") {
+                            steps {
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M eps -- ./build/sam2p @@ build/out.eps"
+                            }
+                        }
+                    }
                 }
             }
             post {
