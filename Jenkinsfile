@@ -81,22 +81,23 @@ pipeline {
                     parallel {
                         stage("PDF") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M pdf -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.pdf || true"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '1m' 'pdf' '1'"
+                                }
                             }
                         }
                         stage("PNG") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S png -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.png || true"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '1m' 'png' '0'"
                             }
                         }
                         stage("TIFF") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S tiff -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.tiff || true"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '1m' 'tiff' '0'"
                             }
                         }
                         stage("EPS") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S eps -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.eps || true"
+                                sh "./ci/run_fuzzer.sh 'build/Fuzzing' '1m' 'eps' '0'"
                             }
                         }
                     }
