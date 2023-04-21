@@ -82,7 +82,6 @@ pipeline {
                         stage("PDF") {
                             steps {
                                 sh "./ci/run_fuzzer.sh 'build/Fuzzing' '1m' 'pdf' '1'"
-                                }
                             }
                         }
                         stage("PNG") {
