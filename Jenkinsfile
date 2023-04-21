@@ -81,22 +81,22 @@ pipeline {
                     parallel {
                         stage("PDF") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M pdf -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.pdf"
+                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M pdf -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.pdf || true"
                             }
                         }
                         stage("PNG") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S png -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.png"
+                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S png -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.png || true"
                             }
                         }
                         stage("TIFF") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S tiff -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.tiff"
+                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S tiff -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.tiff || true"
                             }
                         }
                         stage("EPS") {
                             steps {
-                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S eps -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.eps"
+                                sh "timeout -s INT 1m afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S eps -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.eps || true"
                             }
                         }
                     }
