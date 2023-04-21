@@ -81,22 +81,22 @@ pipeline {
                     parallel {
                         stage("PDF") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M pdf -- ./build/sam2p @@ build/out.pdf"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M pdf -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.pdf"
                             }
                         }
                         stage("PNG") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S png -- ./build/sam2p @@ build/out.png"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S png -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.png"
                             }
                         }
                         stage("TIFF") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S tiff -- ./build/sam2p @@ build/out.tiff"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S tiff -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.tiff"
                             }
                         }
                         stage("EPS") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S eps -- ./build/sam2p @@ build/out.eps"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S eps -- ./build/Fuzzing/sam2p @@ build/Fuzzing/out.eps"
                             }
                         }
                     }
