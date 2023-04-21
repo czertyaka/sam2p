@@ -86,17 +86,17 @@ pipeline {
                         }
                         stage("PNG") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M png -- ./build/sam2p @@ build/out.png"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S png -- ./build/sam2p @@ build/out.png"
                             }
                         }
                         stage("TIFF") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M tiff -- ./build/sam2p @@ build/out.tiff"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S tiff -- ./build/sam2p @@ build/out.tiff"
                             }
                         }
                         stage("EPS") {
                             steps {
-                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -M eps -- ./build/sam2p @@ build/out.eps"
+                                sh "afl-fuzz -i build/Fuzzing/corpus -o build/Fuzzing/output -S eps -- ./build/sam2p @@ build/out.eps"
                             }
                         }
                     }
