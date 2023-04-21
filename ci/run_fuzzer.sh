@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 dir=$1
 timeout=$2
 output_type=$3
@@ -17,7 +19,5 @@ else
     input_arg="${dir}/corpus"
 fi
 
-timeout -s INT ${timeout} \
-    afl-fuzz -i ${input_arg} -o ${dir}/output -${role_flag} ${output_type} -- \
-    ./${dir}/sam2p -- ${dir}/out.${output_type}
-exit 0
+afl-fuzz -i ${input_arg} -o ${dir}/output -${role_flag} ${output_type} -V ${timeout} -- \
+    ./${dir}/sam2p @@ ${dir}/out.${output_type}

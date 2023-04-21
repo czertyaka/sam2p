@@ -3,8 +3,8 @@ pipeline {
     parameters {
         string(
             name: 'FTO',
-            defaultValue: '30m',
-            description: 'Fuzzing timeout'
+            defaultValue: '1800',
+            description: 'Fuzzing timeout, sec'
         )
     }
     stages {
