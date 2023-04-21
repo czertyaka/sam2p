@@ -14,7 +14,8 @@ else
 fi
 
 if [ "$(ls -A ${dir}/output/${output_type}/_resume)" ]; then
-    input_arg="-"
+    # input_arg="-"
+    input_arg="${dir}/corpus"
 else
     input_arg="${dir}/corpus"
 fi
