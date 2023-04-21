@@ -106,7 +106,7 @@ pipeline {
                 stage("Coverage") {
                     steps {
                         sh "cmake -B build/FuzzingCoverage . -DCMAKE_BUILD_TYPE=Debug"
-                        sh "cmake --build build/FuzzingCoverage --target sam2p \$(nproc)"
+                        sh "cmake --build build/FuzzingCoverage --target sam2p -j \$(nproc)"
                         sh """
                             afl-cov \
                                 -d build/Fuzzing/output \
