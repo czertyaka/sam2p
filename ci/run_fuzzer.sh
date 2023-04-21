@@ -13,7 +13,7 @@ else
     role_flag="S"
 fi
 
-if [ "$(ls -A ${dir}/output)" ]; then
+if [ "$(ls -A ${dir}/output/${output_type}/_resume)" ]; then
     input_arg="-"
 else
     input_arg="${dir}/corpus"
