@@ -52,11 +52,6 @@ pipeline {
                     }
                 }
             }
-            post {
-                always {
-                    cleanWs(deleteDirs: true)
-                }
-            }
         }
         stage("Fuzzing") {
             agent {
