@@ -109,17 +109,6 @@ pipeline {
                     }
                 }
             }
-            post {
-                always {
-                    cleanWs(
-                        deleteDirs: true,
-                        patterns: [
-                            [ pattern: "sam2p/build/corpus", type: 'EXCLUDE' ],
-                            [ pattern: "sam2p/build/output", type: 'EXCLUDE' ]
-                        ]
-                    )
-                }
-            }
         }
     }
 }
